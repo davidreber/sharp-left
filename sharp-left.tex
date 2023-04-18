@@ -1,6 +1,16 @@
 \documentclass{article}
 \usepackage{amsmath, amsthm, amssymb}
 
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={Overleaf Example},
+    pdfpagemode=FullScreen,
+    }
+
 \usepackage[english]{babel}
 \newtheorem{theorem}{Theorem}
 \newtheorem{corollary}{Corollary}
@@ -40,68 +50,90 @@
 % \section*{Caveats}
 % At each model step, describe alternatives and why I chose the one I did. Mention why one might want to consider other options.
 
-\section*{Rough Sketch}
+% \section*{TL;DR}
+% \begin{itemize}
+%     \item The “sharp left turn” relies on assumptions of 1. Fast change, 2. ____, and 3. /____
+%     \item The fast change assumption can be verified by demonstration of cases where goals have high sensitivity to the sort of perturbations we expect IRL
+%     \item ___ can be falsified by demonstration of ___    
+% \end{itemize}
+
+\section{Motivation}
+There's been quite a bit of \href{https://www.alignmentforum.org/posts/iy2o4nQj9DnQD7Yhj/discussion-with-nate-soares-on-a-key-alignment-difficulty}{disagreement} and confusion around Nate Soares' `Sharp Left Turn' hypothesis, which he posits is the `hard part' of alignment, and which would render using AGI even on seemingly positive objectives (e.g. as an automated alignment researcher) inherently dangerous.
+
+I think we can do better at resolving this disagreement. 
+The goal of this post is to articulate the “sharp left turn” hypothesis formally, and articulate experiments which can either verify or falsify it. 
+To ensure that the formalism is not unduly favoring one perspective, I have iterated with Nate Soares, [someone], and [someone]. Each broadly endorses this document: specific comments are marked in brackets with the individual’s initials (NS, and ?? respectively).
+
+\section{Formalism}
+
+All frameworks are wrong, but some are useful. This framework is the map, not the territory. My hope is that by proposing a decent framework, and demonstrating how to derive testable implications of that framework, others will have an easier time exploring implications of (realistic!) variations of the framework. If the majority of the testable implications of realistic framework-variations are empirically leaning one direction, this constitutes overall strong evidence for that conclusion. In the worst case that the empirical results end up being highly sensitive to the differences of multiple realistic frameworks, then at least we’ll have succeeded in articulating how our assumptions affect our interpretations.
+
+Here, by “realistic” assumption I’m gesturing at “an assumption which is likely to be valid in the situations we expect to end up happening”. I expect, and encourage, disagreement about which assumptions are “realistic”.
+
+\subsection{What is a Goal?}
 
 Let's assume that human concepts are crisp in the sense that they are amenable to being assigned mathematical variables
-\begin{assumption}{\textbf{Finite Concept Space}}
-    The set of relevant human concepts is finite.
-\end{assumption}
-Perhaps there are situations where an infinite-concept space would be more appropriate, but I suspect that sticking with finite won't affect this investigation too much, and finite seems already plently large enough to capture much of what us huans care about.
+This shouldn't be a problem, because it seems like human concepts can be written down and formalized, even if they are intrinsically soft or fuzzy.
 
-\begin{assumption}{\textbf{Hard Concepts}}
-    Human concepts can be written down and formalized, even if they are intrinsically soft or fuzzy.
-\end{assumption}
+\begin{definition}{\textbf{Concept Space}}
+    A concept consists of a set of states. If concept $X$ takes on value $x$, we write $X=x$.
+    The concept space is the cartesian product of all concepts, with elements of the form $(x_1,x_2\dots)$
+\end{definition}
+
+% \begin{assumption}{\textbf{Finite Concept Space}}
+%     The set of relevant human concepts is finite.
+% \end{assumption}
+% Perhaps there are situations where an infinite-concept space would be more appropriate, but I suspect that sticking with finite won't affect this investigation too much, and finite seems already plently large enough to capture much of what us huans care about.
+
+Note that we can get a goal naturally from utility functions by asking where those functions are optimized (or more generally, asking for "above a threshold"). Hence multiple utility functions may correspond to a single goal: indeed, each goal can have an infinite number of utility functions, but those are all equivalent in some sense. Consequently, we'll refer to goals instead of utility/loss functions.
 
 \begin{definition}{\textbf{Goal}}
-    An indicator function over concept space that determines which states are okay and which aren't.
+    An indicator function over concept space that determines which states are satisfactory, and which are not.
 \end{definition}
 
-Note: this notion of goal is extremely flexible; not all are well-defined or feasible, and some are separate from concept-states.
+Now we also want to restrict our attention to concept-tuples which are sensical. This is because we want to avoid the problem of having a goal that is impossible to achieve, or that is so unlikely to be achieved that it's not worth pursuing. So, we'll define a set $\Omega$ which is the set of all concept-tuples which make sense:
+\begin{itemize}
+    \item Equality relations (synonymns, concerved quantites in physics, etc)
+    \item heirarcial relationships like "Socrates is a man" and "a man is a human", plus the transitive closure of such relationships
+\end{itemize}
 
-\begin{definition}{\textbf{Sensical}}
-    A concept-tuple is considered sensical if it respects reality's relationships/constraints between concepts.
-\end{definition}
-
-\begin{definition}{\textbf{Constraint}}
-    Constraints are relationships between concepts, such as "a woman is a person" as well as temporal and logical relationships.
-\end{definition}
-
-\begin{definition}{\textbf{Convergent Instrumental Subgoal}}
-    A subgoal that is instrumental for multiple goals.
-\end{definition}
+With a lot of work, we could probably come up with a formal definition of sensical concept-tuples, but for now we'll just assume that we can do it.
 
 \begin{definition}{\textbf{Sensical Concept-Tuples}}
-    
     Call the entire set of sensical concept-tuples $\Omega$.
 \end{definition}
 
-\begin{assumption}{\textbf{$\Omega$ is a $\sigma$-Algebra}}
+Note that $\Omega$ is a subset of the set of all concept-tuples, which is the set of all possible worlds.
+
+Now really, there's no reason to believe that $\Omega$ is a $\sigma$-algebra, but it's a good assumption to make for now: otherwise, it get hard to talk about probabilities. We can always relax it later.
+
+\begin{assumption}{}
     $\Omega$ is a $\sigma$-algebra.
 \end{assumption}
 
-\begin{definition}{\textbf{Hard Goal}}
-    We call a goal $g$ \textbf{hard} if $P(g)$ is very small.
+For intution, just consider $\Omega=\mathcal{R}^n$ (though the results here don't rely on this). This is a $\sigma$-algebra, and it makes sense for modeling `nice' concepts that are amenable to real-values. 
+
+\begin{definition}{\textbf{Hard Goal (Informal)}}
+    We call a goal $g$ \textbf{hard} if $g$ is very restrictive; that is, $P(g)$ is very small.
 \end{definition}
 
-Note that we can get a goal naturally from utility functions by asking where those functions are optimized (or more generally, asking for "above a threshold"). Hence multiple utility functions may correspond to a single goal: indeed, each goal can have an infinite number of utility functions, but those are all equivalent in some sense.
-
-Now, suppose we have a goal $g^*$.
+\subsection{What is a Convergent Instrumental Subgoal?}
 
 \begin{definition}{\textbf{Subgoal}}
-    A subgoal is any goal $g_i \neq g^*$ such that $g_i \neq \Omega$, and is used as a proxy for $g^*$.
+    For a given goal $g^*$, a subgoal is any goal $g_i \neq g^*$ used as a proxy for $g^*$. Unless stated otherwise, it will be assumed that subgoals are nontrivial: $g_i \neq \emptyset$ and $g_i \neq \Omega$.
 \end{definition}
 
 \begin{definition}{\textbf{Instrumental}}
-    A subgoal $g_i$ is "instrumental" for $g^*$ if $P(g^*=1|g_i=1)>P(g^*=1)$; that is, achieving $g_i=1$ makes $g^*=1$ more likely.
+    A subgoal $g_i$ is ``instrumental" for $g^*$ if $P(g^*=1|g_i=1)>P(g^*=1)$; that is, achieving $g_i=1$ makes $g^*=1$ more likely.
 \end{definition}
 
 For intuition, it can be useful to consider the special case where $g^* = \bigcap_i g_i$, although this excludes subgoals which throw away some decent $g^*=1$ options in order to make $g^*=1$ more likely to be hit overall. Note by definition, we can't have trivial subgoals like $g_i=\Omega$.
 
 \begin{definition}{\textbf{Convergent}}
-    Let $G_1, \dots, G_n$ be goals. We say a goal $\hat{g}$ is a convergent instrumental subgoal for $g_1, \dots, g_n$ if it is instrumental for each; that is, $P(g_i=1|\hat{g}=1)>P(g_i=1)$ for all $i$.
+    Let $g_1, \dots, g_n$ be goals. We say a goal $\hat{g}$ is a convergent instrumental subgoal for $g_1, \dots, g_n$ if it is instrumental for each; that is, $P(g_i=1|\hat{g}=1)>P(g_i=1)$ for all $i$.
 \end{definition}
 
-Aside: if $\hat{g}$ is human-understandable, it may be a concept. Hence, this phenomenon (if it indeed exists) would correspond to a lot of goals having high concentration on that half.
+Aside: if $\hat{g}$ is human-understandable, it may itself be a concept. In our $\mathcal{R}^n$ example, this would correspond to several goals having high probability density along the dimension corresponding to $\hat{g}$. For instance, pretty much any goal $g_i$ which involves free human mobility on Earth in the short-term is going to require the convergent instrumental goal of `Earth's oxygen level of $21\%$', which is a particular value of the `Earth's oxygen level' dimension.
 
 % \begin{figure}[h!]
 %     \centering
@@ -109,9 +141,9 @@ Aside: if $\hat{g}$ is human-understandable, it may be a concept. Hence, this ph
 %     \caption{A binary random variable $\hat{g}$ having lots of concentration on $\hat{g}=1$.}
 % \end{figure}
 
-If convergent instrumental subgoals (CISs) exist, AGI by nature is likely to pick up on them (because it's meant to be general).
+If convergent instrumental subgoals (CISs) exist, and since AGI by its nature is trained to be optimal with respect to a variety of goals, it seems like AGI \textbf{must} pick up any relevant instrumental goals. This intuition is explored more formally in Section \ref{CIS-general}.
 
-\section{Generalization}
+\subsection{What is Generalization?}
 What does generalization mean in this context?
 
 \begin{example}
@@ -125,7 +157,7 @@ Hence this amounts to changing the research question and goals, in an unfamiliar
 
 Now, let $h$ be the goal of "avoids really obvious bad stuff". If $h$ is hard (aka value is fragile) it's not robust to changes in the goal. If $h$ is large relative to the coherent states $\omega$, it's very generalizable. This change of goal is probably best illustrated intuitively with stochastic gradient descent. Goals (as defined here) change on each batch, but empirically the sequence of them still leads you where you want.
 
-\section{Are CISs likely to be learned in general?}
+\subsection{Are CISs likely to be learned in general?}\label{CIS-general}
 Assume $\hat{g}$ is a convergent instrumental subgoal for some $\{g_i\}$, but not the goals $\{g_j\}$. Given some random process for selecting one of $\{g_i\} \cup \{g_j\}$, how likely is $\hat{g}$ to be satisfied? That is, we have fixed $P(G_k=1)$ for $k \in \{i\} \cup \{j\}$, and want to find $P(\hat{g} =1)$.
 
 \[
@@ -134,25 +166,67 @@ P(\hat{g}=1|g_k=1)=\sum_i P(\hat{g}=1|g_i=1)P(g_i=1) + \sum_j P(\hat{g}=1|g_j=1)
 
 For simplicity, assume $P(\hat{g}=1|g_i=1) \approx 1$, and $P(\hat{g}=1|g_j=1) \approx 0$. Then $P(\hat{g}=1|g_k=1) \approx \sum_i P(g_i=1)$. That is, the likelihood of the convergent instrumental subgoal is going to be roughly the probability that any $g_i$ is picked. But this conclusion rests heavily on the $P(\hat{g}=1|g_i=1) \approx 1$ assumption.
 
-\section{How likely is a CIS to be learned for a particular $g^*$?}
+\subsection{How likely is a CIS to be learned for a particular $g^*$?}
 Suppose $\hat{g}$ is a CIS for a goal $g^*$. That is, $P(g^*=1|\hat{g}=1)>P(g^*=1)$. If we assume an extremely naive learner which samples $x$ from $\Omega$ \textit{uniformly} to see if $x \in g^*$, then switching to sampling $x \in \hat{g}$ uniformly will represent a speedup of "operations til goal-satisfaction".
-
-\begin{conjecture}
-Why wouldn't this be the case numerically?
-\end{conjecture}
 
 Algorithm 1: sample $x$ from $\Omega$ uniformly until $g^*(x)=1$, then terminate.
 
 Algorithm 2: sample $x$ from $\hat{g}$ uniformly until $g^*(x)=1$, then terminate.
 
-According to GPT-4, the number of iterations for Algorithms 1 and 2 follow geometric distributions [TODO: verify] so the expected number of iterations are $\mathbb{E}_1 = 1/(P(g^*=1))$ and $\mathbb{E}_2 = 1/P(g^*=1|\hat{g}=1)$.
+[TODO: verify] The number of iterations for Algorithms 1 and 2 follow geometric distributions so the expected number of iterations are 
+\[
+\mathbb{E}_1 = \frac{1}{P(g^*=1)} \qquad \mathbb{E}_2 = \frac{1}{P(g^*=1|\hat{g}=1)}    
+\]
 
-So the speedup given by the ratio of $\mathbb{E}_1 / \mathbb{E}_2 = P(g^*=1|\hat{g}=1)/P(g^*=1)$. Since the numerator is bounded, this ratio seems largely driven by how small $P(g^*=1)$ might be.
+So the speedup given by the ratio
+\[
+\mathbb{E}_1 / \mathbb{E}_2 = \frac{P(g^*=1|\hat{g}=1)}{P(g^*=1)}
+\]
+Since the numerator is bounded, this ratio seems largely driven by how small $P(g^*=1)$ might be.
 
-\textbf{Key takeaway: if your goal $g^*$ is hard}, then the assumption that if a CIS exists it will be used, seems more reasonable than not.
+\textbf{Key takeaway: if your goal $g^*$ is hard} (such that $P(g^*=1)$ is very small), then it seems reasonable that if a CIS exists, it will be used.
 
-\section{Takeaways}
+\subsection{Takeaways}
 Now, back to our generalization question. If $g_0$ is the original goal, and it is hard, then any instrumental subgoal $\hat{g}$ is likely to be learned, \textbf{and} it's more likely that changes to the goal will cause the original goal to be unfulfilled. If $\hat{g}$ is widely convergent, this increases the likelihood $\hat{g}$ will be learned further.
+
+% \section{The Sharp Left Turn, as a Concern \dots or Not}
+% So, what is the Sharp Left Turn? A combination of:
+% \begin{itemize}
+%     \item Discontinuous Shifts
+%     \item Capabilities generalize better than safety
+% \end{itemize}
+
+\section{The Sharp Left Turn, as a Concern\ldots or Not}
+\textbf{What is the Sharp Left Turn?} A combination of:
+\begin{itemize}
+    \item Discontinuous Shifts
+    \begin{itemize}
+        \item We expect large goal-perturbations
+    \end{itemize}
+    \item Capabilities generalize better than safety
+    \begin{itemize}
+        \item “Really bad stuff” is hard to avoid
+        \item Convergent instrumental subgoals mean that even if goals shift, at least the CIS will still be hit
+    \end{itemize}
+\end{itemize}
+
+\textbf{In what ways might we not be concerned about a Sharp Left Turn?}
+\begin{itemize}
+    \item “Really Bad Stuff” is unlikely to be hit
+    \begin{itemize}
+        \item Challenging the “Safety doesn’t generalize” argument
+    \end{itemize}
+    \item Smooth Shifts + Reliable Control
+    \begin{itemize}
+        \item If we could ensure goals never shift by more than a small amount, and we can quickly detect and correct this shift, then we aren’t exposing ourselves too much to really bad stuff
+    \end{itemize}
+    \item Smooth Shifts + Short Usage
+    \begin{itemize}
+        \item If the likely mechanisms to induce goal shift can only move goals smoothly (like, there’s expected to be a small upper bound on how much they can move per hour of deployment), and we only need to use it for a short amount of time before we get what we need, then we have a low risk of hitting “really bad stuff” before achieving our goal.
+        \item This seems to be the primary idea behind the “use AGI to advance alignment research”
+    \end{itemize}
+\end{itemize}
+
 
 Cruxes:
 \begin{itemize}
@@ -163,7 +237,7 @@ Cruxes:
 Can this be verified experimentally?
 
 
-\section*{Questions}
+\subsection*{Questions}
 \begin{itemize}
     \item Do convergent intstrumental subgoals (CISs) actually exist? 
     \item Are CISs expected to be frequent, theoretically?
@@ -184,5 +258,44 @@ The speedup depends on the ratio of the expected number of iterations for the tw
 \begin{itemize}
     \item Can this be verified experimentally?
 \end{itemize}
+
+\section{Assumptions, ranked by Credulity}
+\subsection{Fast change}
+\begin{itemize}
+    \item There are realistic situations where, due to e.g. distributional shift, reflection, etc, goals can rapidly change so that when the new goal is satisfied, the old goal is unlikely to be satisfied: $P(g_0 | g_1) \ll P(g_0)$
+\end{itemize}
+
+\subsection{Reliable Control}
+
+\subsection{Available CIS will be Exploited}
+
+
+\section{Experiments}
+\subsection{Continuous / Discontinuous Shifts}
+\begin{itemize}
+    \item The fast change assumption can be verified by demonstration of cases where goals have high sensitivity to the sort of perturbations we expect in relevant situations in the real world.
+\end{itemize}
+
+\subsection{Causal confusion}
+\begin{itemize}
+    \item Changes in environment
+\end{itemize}
+
+\subsection{Likelihood of “Really bad stuff”}
+\begin{itemize}
+    \item Social studies on “fragility of value”
+\end{itemize}
+
+\section{Why it matters}
+\emph{for this section, try to quote directly and evenly from both sides, and stick to cruxes that would hold only in either case (not ones that people would likely stick to no matter what)}
+\begin{itemize}
+    \item Timing of when to slow AGI development
+    \item OpenAI’s “slow down clause”
+    \item Whether it’s safe to use AGI to further alignment research
+\end{itemize}
+
+
+\section{Acknowledgements}
+This research is made possible via a Long-Term Future Funds grant from Effective Ventures.
 
 \end{document}
