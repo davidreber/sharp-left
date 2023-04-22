@@ -1,8 +1,8 @@
 # Fdb version 3
-["pdflatex"] 1682193582 "/home/david/Documents/Victor_research/Posts/sharp-left/sharp-left.tex" "sharp-left.pdf" "sharp-left" 1682193583
+["pdflatex"] 1682198756 "/home/david/Documents/Victor_research/Posts/sharp-left/sharp-left.tex" "sharp-left.pdf" "sharp-left" 1682198757
   "/etc/texmf/web2c/texmf.cnf" 1677080620 475 c0e671620eb5563b2130f56340a5fde8 ""
   "/home/david/.texlive2021/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1000.600pk" 1681576812 11524 939c28f4fbd6bb7d935e8648587accc5 ""
-  "/home/david/Documents/Victor_research/Posts/sharp-left/sharp-left.tex" 1682193582 27239 c30cbd5d797ac840ad7bcc9c46a8c888 ""
+  "/home/david/Documents/Victor_research/Posts/sharp-left/sharp-left.tex" 1682198755 25290 62362dda20aa302c2e8b9c41e6264306 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm" 1246382020 1004 54797486969f23fa377b128694d548df ""
@@ -111,9 +111,9 @@
   "pics/loss-goal.png" 1682178418 12106 c243321822706a3e92593e9edf825b31 ""
   "pics/loss-shift.png" 1682181000 28131 477d1ee05cfd30c0b2d899e1a332fd02 ""
   "pics/robust-CIS.png" 1682181530 230989 516ad6375cffb68b1214d1f7966788b7 ""
-  "sharp-left.aux" 1682193583 6710 5d8ca1d9f65e53ec9944fb94a3d8310b "pdflatex"
-  "sharp-left.out" 1682193583 4122 37a1522acb8d2e76857c4ff69059a414 "pdflatex"
-  "sharp-left.tex" 1682193582 27239 c30cbd5d797ac840ad7bcc9c46a8c888 ""
+  "sharp-left.aux" 1682198757 6711 72bcdee9c6adfbd5c800d9afa6497fe4 "pdflatex"
+  "sharp-left.out" 1682198757 4122 37a1522acb8d2e76857c4ff69059a414 "pdflatex"
+  "sharp-left.tex" 1682198755 25290 62362dda20aa302c2e8b9c41e6264306 ""
   (generated)
   "sharp-left.aux"
   "sharp-left.log"
