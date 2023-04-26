@@ -137,7 +137,7 @@ Note that we can get a goal naturally from utility functions by asking where tho
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/loss-goal.png} 
+    \includegraphics[width=0.5\textwidth]{pics/loss-goal.png} 
     \caption{Loss and utility functions can be thresholded to provide an implicit goal.}
     \label{fig:loss-goal} 
 \end{figure}
@@ -145,6 +145,8 @@ Note that we can get a goal naturally from utility functions by asking where tho
 \begin{definition}{\textbf{Goal}}
     An indicator function over concept space that determines which states are satisfactory, and which are not.
 \end{definition}
+
+\marginpar{Add: example which shows how a goal can be derived in RL settings.}
 
 Now we also want to restrict our attention to concept-tuples which are sensical; we want to avoid the problem of having a goal that is impossible to achieve, or that is so unlikely to be achieved that it's not worth pursuing. So, we'll define a set $\Omega$ which is the set of all concept-tuples which `make sense':
 \begin{itemize}
@@ -171,7 +173,7 @@ For instance the problem of finding a promising research problem is somewhat har
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.75\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/goal-research.png} 
+    \includegraphics[width=0.75\textwidth]{pics/goal-research.png} 
     \caption{Goal for coming up with research ideas. Since it relies on several disjoint concepts taking on a narrow range of values, it is fairly difficult.}
     \label{fig:goal-research} 
 \end{figure}
@@ -192,7 +194,7 @@ For intuition, it can be useful to consider the special case where $g^* = \bigca
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.7\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/instrumental.png} 
+    \includegraphics[width=0.7\textwidth]{pics/instrumental.png} 
     \caption{$g_c$, $g_i$, and $g_p$ are all instrumental subgoals for the original goal $g_o$.}
     \label{fig:instrumental} 
 \end{figure}
@@ -217,7 +219,7 @@ This is a very strong condition, and it seems a bit too restrictive to only refe
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.85\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/disparate.png} 
+    \includegraphics[width=0.85\textwidth]{pics/disparate.png} 
     \caption{Left: two goals which are not disjoint enough to be interesting. Center: three goals which are pairwise disjoint. Right: three goals which are not pairwise disjoint, but are still distinct enough that it would be interesting to see a convergent instrumental subgoal for them. (Note that the center and right figures treat goals as distibutions; in our current framework, we could refer to the supoport of these distributions.)}
     \label{fig:disparate} 
 \end{figure}
@@ -239,6 +241,7 @@ If we were sampling $k$ goals uniformly from $\Omega$ (say, $\Omega=[0,1]^n$), t
 
 Optimization in the real world is far from uniform...[TBD].
 
+\marginpar{Add concrete mathematical example for RL goal shifts as a result of long-term planning, so it's not just the `supervised learning' example.}
 \subsection{What is Generalization?}
 In order to talk about the sharp left turn, we need a notion of generalization.
 
@@ -252,7 +255,7 @@ See Figure \ref{fig:loss-shift}.
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.5\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/loss-shift.png} 
+    \includegraphics[width=0.5\textwidth]{pics/loss-shift.png} 
     \caption{A loss function which is a function of the data. The goal is to minimize the loss function. If the data distribution changes, then the goal changes.}
     \label{fig:loss-shift} 
 \end{figure}
@@ -272,7 +275,7 @@ Let's represent a change in a goal as $g_0 \rightarrow g_1$. Maybe it's a small 
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/robust-CIS.png} 
+    \includegraphics[width=0.8\textwidth]{pics/robust-CIS.png} 
     \caption{Convergent instrumental subgoals are likely to be robust to distributional shifts.}
     \label{fig:robust-CIS} 
 \end{figure}
@@ -281,7 +284,7 @@ On the other hand, let's consider the goal of ``avoids really obvious bad stuff'
 
 \begin{figure}[ht]
     \centering
-    \includegraphics[width=0.8\textwidth]{/home/david/Documents/Victor_research/Posts/sharp-left/pics/alpha.png} 
+    \includegraphics[width=0.8\textwidth]{pics/alpha.png} 
     \caption{Illustrative way in which the goal $\alpha$ of ``avoids really obvious bad stuff'' could end up being hard (left) or not (right).}
     \label{fig:alpha} 
 \end{figure}
@@ -323,6 +326,7 @@ Now, back to our generalization question. If $g_0$ is the original goal, and it 
 \section{The Sharp Left Turn, as a Concern\ldots or Not}
 Let's summarize the ideas behind the sharp left turn hypothesis, to get a sense for how we could validate or falsify it experimentally. Note that while the claims below are general enough to apply to any system with a goal, both sides should probably be focused on demonstrating their respective claims \emph{for the situations we actually expect to happen in practice}. 
 
+\marginpar{TODO: make each of these statements a concrete probabilitistic claim}
 \subsection{What is the Sharp Left Turn?} 
 The sharp left turn can be decomposed into the following parts:
 
