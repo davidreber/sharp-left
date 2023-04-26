@@ -1,28 +1,77 @@
+\pdfoutput=1
 \documentclass{article}
-\usepackage{amsmath, amsthm, amssymb}
-\usepackage{graphicx}
 
-\usepackage{hyperref}
-\hypersetup{
-    colorlinks=true,
-    linkcolor=blue,
-    filecolor=magenta,      
-    urlcolor=cyan,
-    pdftitle={Sharp Left Turn},
-    pdfpagemode=FullScreen,
-    }
 
-\usepackage[english]{babel}
-\newtheorem{theorem}{Theorem}
-\newtheorem{corollary}{Corollary}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{conjecture}{Conjecture}
-\newtheorem{definition}{Definition}
-\newtheorem{workdefinition}{Working Definition}
-\newtheorem{problem}{Problem}
-\newtheorem{example}{Example}
-\newtheorem{remark}{Remark}
-\newtheorem{assumption}{Assumption}
+% alptex + small aesthetic tweaks + some extra math defs
+\input{preamble/preamble.tex}
+\input{preamble/preamble_math}
+\input{preamble/definitions_basic}
+
+% bibtex import + some code to strip away useless bib info (volume number, isbn, and the ilk), and to standardize capitalization
+% warning: the arxiv uses an outdated bibtex, which causes cryptic and frustrating upload errors 
+% easiest solution: install whatever current arxiv texlive is from ftp://tug.org/historic/systems/texlive/ (download the ISO) and compile using this versions pdflatex and bibtex
+% alternatively, look upon https://github.com/plk/biblatex/wiki/biblatex-and-the-arXiv and despair. 
+\input{preamble/minimalist_biblatex}
+
+\addbibresource{bibs/sensitivity}
+
+\crefformat{equation}{(#2#1#3)}
+\crefformat{figure}{Figure~#2#1#3}
+\crefname{example}{Example}{Examples}
+\crefname{lemma}{Lemma}{Lemmas}
+\crefname{cor}{Corollary}{Corollaries}
+\crefname{theorem}{Theorem}{Theorems}
+\crefname{assumption}{Assumption}{Assumptions}
+
+%********************************************************************
+% Extra definitions
+%********************************************************************
+\usepackage{enumitem} % tight enumerates
+\usepackage[separate-uncertainty=true,multi-part-units=single]{siunitx} % better table control
+
+\newcommand{\maxf}[1]{{\cellcolor[gray]{0.8}} #1}
+\global\long\def\embedding{\lambda}
+
+% Peter's grey box
+\declaretheoremstyle[
+%    postheadspace=\newline,
+spacebelow=\parsep,
+    spaceabove=\parsep,
+  mdframed={
+    backgroundcolor=gray!10!white,     % vv: weird spacing issue, so leaving transpartent for now
+    hidealllines=true, 
+    innertopmargin=8pt, 
+    innerbottommargin=4pt, 
+    skipabove=8pt,
+    skipbelow=10pt,
+    nobreak=true
+}
+]{grayboxed}
+\declaretheorem[style=grayboxed,name=Assumption]{gassumption}
+% \declaretheorem[style=plain]{auxtheorem}
+% \declaretheorem[style=grayboxed,sibling=auxtheorem]{algorithm}
+% \declaretheorem[style=grayboxed,name=Algorithm]{nalgorithm}
+\crefname{gassumption}{Assumption}{Assumptions}
+
+\usepackage{thm-restate}
+
+%********************************************************************
+% Dan Roy's commenting code
+%********************************************************************
+\usepackage{xcolor}
+\input{preamble/commenting.tex}
+%\input{preamble/myvruler.tex}
+%For submission, uncomment these lines to make all annotations render as blank.
+% \renewcommand{\LATER}[1]{}
+% \renewcommand{\fLATER}[1]{}
+% \renewcommand{\TBD}[1]{}
+% \renewcommand{\fTBD}[1]{}
+% \renewcommand{\PROBLEM}[1]{}
+% \renewcommand{\fPROBLEM}[1]{}
+% \renewcommand{\NA}[1]{#1}  %% Note, NA's pass through!
+
+% frontmatter
+\usepackage[affil-it]{authblk}
 
 \title{Testing the Sharp Left Turn: A Probabilistic Framing and Experimental Desiderata}
 \author{David Reber}
@@ -328,13 +377,10 @@ To distinguish between Claims $B$ and $\overline{B}$, we need to demonstrate whe
 \begin{itemize}
     \item Social studies on “fragility of value”
 \end{itemize}
-
 \subsection{Plausibility of Robust CIS's}
 To distinguish between Claims $C_1$ and $\overline{C_1}$, we need to demonstrate whether or not there are robust CIS's. This seems promising for current RL methods, but the challenge will be in demonstrating that any instrumental goals are actually 1. convergent for a wide range of disparate goals, and 2. they are robust to \emph{large} perturbations in these goals.
-
 \subsection{Likelihood of CIS's being learned}
 To distinguish between Claims $C_2$ and $\overline{C_2}$, we need to demonstrate whether or not CIS's are likely to be learned, if they exist.
-
 \subsection{Ranking of difficulty}
 If I were forced to rank the expected difficulty of running convincing experiments without any more time to consider deeply, I would rank them as follows:
 \begin{itemize}
@@ -344,11 +390,8 @@ If I were forced to rank the expected difficulty of running convincing experimen
     \item Likelihood of CIS's being learned: Medium
 \end{itemize}
 I could imagine this ranking changing drastically if I spent more time thinking about it, but I think it’s a reasonable starting point. The most likely thing that would change the difficulty is if there already existed academic work which sufficiently resolves the various questions. 
-
 \section{Relevant Academic Fields}
 I'd like to ground this formalism in existing fields as much as possible without distorting the content. [TODO: do brief survey, talk to people, etc.]
-
 % \section{Acknowledgements}
 % This research is made possible via a Long-Term Future Funds grant from Effective Ventures.
-
 \end{document}
