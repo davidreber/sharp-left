@@ -150,8 +150,8 @@ Note that we can get a goal naturally from utility functions by asking where tho
 
 Now we also want to restrict our attention to concept-tuples which are sensical; we want to avoid the problem of having a goal that is impossible to achieve, or that is so unlikely to be achieved that it's not worth pursuing. So, we'll define a set $\Omega$ which is the set of all concept-tuples which `make sense':
 \begin{itemize}
-    \item Equality relations (synonyms, conserved quantites in physics, etc)
-    \item Heirarcial relationships like ``Socrates is a man" and ``a man is a person", plus the transitive closure of such relationships
+    \item Equality relations (synonyms, conserved quantities in physics, etc)
+    \item Hierarchical relationships like ``Socrates is a man" and ``a man is a person", plus the transitive closure of such relationships
 \end{itemize}
 
 With a lot of work, we could probably come up with a formal definition of sensical concept-tuples, but for now we'll just assume that we can do it.
@@ -163,7 +163,7 @@ With a lot of work, we could probably come up with a formal definition of sensic
 Note that $\Omega$ is a subset of the set of all concept-tuples, which is the set of all possible worlds.
 
 
-For intution, just consider $\Omega=[-1,1]^n$ (though the results here don't rely on this).
+For intuition, just consider $\Omega=[-1,1]^n$ (though the results here don't rely on this).
 
 \begin{definition}{\textbf{Hard Goal (Informal)}}
     We call a goal $g$ \textbf{hard} if $g$ is very restrictive; that is, $P(g)$ is very small.
@@ -301,7 +301,9 @@ P(\hat{g}|g_k)=\sum_i P(\hat{g}|g_i)P(g_i) + \sum_j P(\hat{g}|g_j)P(g_j)
 For simplicity, assume $P(\hat{g}|g_i) \approx 1$, and $P(\hat{g}|g_j) \approx 0$. (Intuitively, this states that if $\hat{g}$ is a CIS for $G^*$, it will be learned with high probability; if $\hat{g}$ is not a CIS for $G^*$, it is unlikely to be learned.) Then $P(\hat{g}|g_k) \approx \sum_i P(g_i)$. That is, the likelihood of the convergent instrumental subgoal is going to be roughly the probability that any $g_i$ is picked. But this conclusion rests heavily on the $P(\hat{g}|g_i) \approx 1$ assumption.
 
 \subsection{How likely is a CIS to be learned for a particular goal?}
-To check the $P(\hat{g}|g_i) \approx 1$ assumption, suppose $\hat{g}$ is a CIS for a goal $g^*$. That is, $P(g^*|\hat{g})\gg P(g^*)$. If we assume an extremely naive learner which samples $x$ from $\Omega$ \textit{uniformly} to see if $x \in g^*$, then switching to sampling $x \in \hat{g}$ uniformly will represent a speedup of "operations til goal-satisfaction".
+The $P(\hat{g}|g_i) \approx 1$ assumption seems quite dependent on the details of the learning process.
+
+For a naive start, suppose $\hat{g}$ is a CIS for a goal $g^*$. That is, $P(g^*|\hat{g})\gg P(g^*)$. If we assume an extremely naive learner which samples $x$ from $\Omega$ \textit{uniformly} to see if $x \in g^*$, then switching to sampling $x \in \hat{g}$ uniformly will represent a speedup of "operations til goal-satisfaction".
 
 Algorithm 1: sample $x$ from $\Omega$ uniformly until $g^*(x)=1$, then terminate.
 
